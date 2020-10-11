@@ -1,0 +1,6 @@
+.date {
+    grid-area: date;
+    background-color: white;
+    border: 3px solid rgb(46, 121, 218);
+    border-radius: 15px;
+}

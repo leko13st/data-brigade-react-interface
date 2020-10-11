@@ -1,0 +1,6 @@
+.instruments {
+    grid-area: instruments;
+    background-color:white;
+    border: 3px solid rgb(46, 121, 218);
+    border-radius: 15px;
+}
