@@ -2,30 +2,38 @@ import { Tree } from 'antd';
 import React from 'react'
 import styles from './Outliner.module.css'
 
-const Outliner = () => {
-    function dig(path = '0', level = 1) {
-        const list = [];
-        for (let i = 0; i < 3; i += 1) {
+const Outliner = (props) => {
 
-            let name = (level === 1 ? "Подразделение " : "Бригада ")
+    let data = [...props.brigades]
 
-            const key = `${path}-${i}`;
-            name += i
-            const treeNode = {
-                title: name,
-                key,
-            };
-        
-            if (level > 0) {
-                treeNode.children = dig(key, level - 1);
+    const generateOrder = () => {
+        const list = []
+
+        const createTreeNode = (name = 'Подразделение', num = '1', key = '1') => {
+            console.log(key)
+            return {
+                title: name + ' ' + num,
+                key: key,
+                children: []
             }
-        
-            list.push(treeNode);
         }
-        return list;
+
+        let treeNode = createTreeNode()
+        for (let i = 0; i < data.length; i++){
+            if (i !== 0)
+                if (data[i].division !== data[i - 1].division){
+                    list.push(treeNode)
+                    treeNode = createTreeNode('Подразделение', data[i].division, (data[i].division).toString())
+                }
+
+            treeNode.children.push(createTreeNode('Бригада', (i + 1), (data[i].division).toString() + '-' + i))
+        }
+
+        list.push(treeNode)
+        return list
     }
-      
-    const treeData = dig();
+
+    const treeData = generateOrder();
 
     const chooseBrigade = (event) => {
         debugger
