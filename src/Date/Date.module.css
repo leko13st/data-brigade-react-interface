@@ -5,3 +5,10 @@
     border-radius: 15px;
     padding: 5px;
 }
+
+.title {
+    background-color: #53abdf;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
