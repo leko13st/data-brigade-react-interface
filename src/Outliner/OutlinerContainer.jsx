@@ -11,7 +11,7 @@ const OutlinerContainer = (props) => {
 //mapStateToProps
 const mstp = (state) => {
     return{
-        brigades: state.brigades.brigades
+        brigades: state.brigades.currentListBrigades
     }
 }
 

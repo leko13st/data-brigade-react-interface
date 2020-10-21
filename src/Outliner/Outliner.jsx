@@ -26,10 +26,11 @@ const Outliner = (props) => {
                     treeNode = createTreeNode('Подразделение', data[i].division, (data[i].division).toString())
                 }
 
-            treeNode.children.push(createTreeNode('Бригада', (i + 1), (data[i].division).toString() + '-' + i))
+            treeNode.children.push(createTreeNode('Бригада', data[i].id, (data[i].division).toString() + '-' + i))
         }
 
-        list.push(treeNode)
+        if (data.length > 0)
+            list.push(treeNode)
         return list
     }
 
