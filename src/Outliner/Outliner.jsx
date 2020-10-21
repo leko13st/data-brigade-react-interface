@@ -10,7 +10,6 @@ const Outliner = (props) => {
         const list = []
 
         const createTreeNode = (name = 'Подразделение', num = '1', key = '1') => {
-            console.log(key)
             return {
                 title: name + ' ' + num,
                 key: key,
@@ -26,7 +25,7 @@ const Outliner = (props) => {
                     treeNode = createTreeNode('Подразделение', data[i].division, (data[i].division).toString())
                 }
 
-            treeNode.children.push(createTreeNode('Бригада', data[i].id, (data[i].division).toString() + '-' + i))
+            treeNode.children.push(createTreeNode('Бригада', data[i].id, (data[i].division).toString() + '-' + data[i].id))
         }
 
         if (data.length > 0)
@@ -36,13 +35,16 @@ const Outliner = (props) => {
 
     const treeData = generateOrder();
 
-    const chooseBrigade = (event) => {
-        debugger
+    const chooseBrigade = (data1, data2) => {
+        if (data2.key.length > 2){
+            let key = data2.key.slice(2)
+            props.setActiveBrigade(+key)
+        }        
     }
 
     return (
         <div className={styles.outliner}>
-            <Tree treeData={treeData} defaultExpandAll onClick={(e) => chooseBrigade(e)} />
+            <Tree treeData={treeData} defaultExpandAll onClick={chooseBrigade} />
         </div>
     )
 }

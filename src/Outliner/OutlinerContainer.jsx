@@ -1,10 +1,14 @@
 import React from 'react'
 import { connect } from "react-redux"
+import { actions } from '../Redux/brigade-reducer'
 import Outliner from "./Outliner"
 
 const OutlinerContainer = (props) => {
     return(
-        <Outliner brigades={props.brigades}/>
+        <Outliner 
+            brigades={props.brigades}
+            setActiveBrigade={props.setActiveBrigade}
+        />
     )
 }
 
@@ -16,7 +20,7 @@ const mstp = (state) => {
 }
 
 const mdtp = {
-    //dispatch'и
+    setActiveBrigade: actions.setActiveBrigadeAC
 }
 
 export default connect(mstp, mdtp)(OutlinerContainer)

@@ -1,37 +1,41 @@
 import { Button, Col, Descriptions, Row, Select } from 'antd'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { getCurrentBrigade } from '../Redux/brigade-selector'
 import styles from './Instruments.module.css'
 
 const Instruments = () => {
-    const style = { background: '#0092ff', padding: '8px 0' };
+
     const {Option} = Select
     const styleButton = { width: "20%", textAlign: "center", backgroundColor: "#53abdf", color: "white" }
 
     const buttonEnabled = (event) => {
         event.currentTarget.style.backgroundColor = "#115070"
     }
+    
+    const currentBrigade = useSelector(getCurrentBrigade)
 
     return (
         <div className={styles.instruments}>
             <Row gutter={[16, 4]}>
                 <Col span={6}>
                     <Descriptions size="small" bordered>
-                        <Descriptions.Item label="Бригада" style={{width: "30px"}}>...</Descriptions.Item>
+                        <Descriptions.Item label="Бригада" style={{width: "30px"}}>{currentBrigade.id ? ('Бригада ' + currentBrigade.id) : ''}</Descriptions.Item>
                     </Descriptions>
                 </Col>
                 <Col span={6}>
                     <Descriptions size="small" bordered>
-                        <Descriptions.Item label="Месторождение" style={{width: "30px"}}>...</Descriptions.Item>
+                        <Descriptions.Item label="Месторождение" style={{width: "30px"}}>{currentBrigade.field}</Descriptions.Item>
                     </Descriptions>
                 </Col>
                 <Col span={6}>
                     <Descriptions size="small" bordered>
-                        <Descriptions.Item label="Куст" style={{width: "30px"}}>...</Descriptions.Item>
+                        <Descriptions.Item label="Куст" style={{width: "30px"}}>{currentBrigade.cluster}</Descriptions.Item>
                     </Descriptions>
                 </Col>
                 <Col span={6}>
                     <Descriptions size="small" bordered>
-                        <Descriptions.Item label="Скважина" style={{width: "30px"}}>...</Descriptions.Item>
+                        <Descriptions.Item label="Скважина" style={{width: "30px"}}>{currentBrigade.well}</Descriptions.Item>
                     </Descriptions>
                 </Col>
                 <Col span={6}>
