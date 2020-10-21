@@ -1,7 +1,7 @@
 import { Button, Col, Descriptions, Row, Select } from 'antd'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { getCurrentBrigade } from '../Redux/brigade-selector'
+import { getChannels, getCurrentBrigade } from '../Redux/brigade-selector'
 import styles from './Instruments.module.css'
 
 const Instruments = () => {
@@ -12,8 +12,13 @@ const Instruments = () => {
     const buttonEnabled = (event) => {
         event.currentTarget.style.backgroundColor = "#115070"
     }
-    
+
     const currentBrigade = useSelector(getCurrentBrigade)
+    const channels = useSelector(getChannels)
+
+    const channelList = channels.map(channel => {
+        return <Option value={channel}>{channel}</Option>
+    })
 
     return (
         <div className={styles.instruments}>
@@ -40,11 +45,7 @@ const Instruments = () => {
                 </Col>
                 <Col span={6}>
                     <Select defaultValue="Каналы" style={{ width: "100%", textAlign: "center"}}>
-                        <Option value="Channel 1">Канал 1</Option>
-                        <Option value="Channel 2">Канал 2</Option>
-                        <Option value="Channel 3">Канал 3</Option>
-                        <Option value="Channel 4">Канал 4</Option>
-                        <Option value="Channel 5">Канал 5</Option>
+                        {channelList}
                     </Select>
                 </Col>
                 <Col span={6}>
