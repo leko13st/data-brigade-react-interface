@@ -5,10 +5,7 @@ import { getCurrentBrigadeChart } from '../Redux/brigade-selector'
 import styles from './Chart.module.css'
 
 const Chart = () => {
-    const currentChart = useSelector(getCurrentBrigadeChart)
-
-    
-
+    const currentChart = useSelector(getCurrentBrigadeChart)  
 
     return (
         <div className={styles.chart}>

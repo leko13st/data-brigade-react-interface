@@ -41,11 +41,11 @@ const Date = (props) => {
     return (
         <div className={styles.date}>
             <p className={styles.title}>Рабочая смена</p>
-            <Select value="Сегодня" style={commonStyle}>
+            {/* <Select value="Сегодня" style={commonStyle}>
                 <Option value="today">Сегодня</Option>
                 <Option value="yesterday">Вчера</Option>
                 <Option value="week">Неделя</Option>
-            </Select>
+            </Select> */}
             <Select key='startTime' defaultValue={'init'} style={commonStyle} onChange={setStartTimeShift}>
                 <Option disabled value='init'>...Укажите начало</Option>
                 {startTimeList}

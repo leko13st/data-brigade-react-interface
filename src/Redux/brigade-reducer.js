@@ -26,7 +26,7 @@ let initialState = {
         //Пример заполнения стейта.
     ],
     currentListBrigades: [],
-    currentBrigade: {},
+    currentBrigade: null,
     startShiftTimes: [
         '00:00',
         '06:00',
@@ -45,6 +45,13 @@ let initialState = {
         'Канал 3',
         'Канал 4',
         'Канал 5'
+    ],
+    activeButtonStates: [
+        'default',
+        'default',
+        'default',
+        'default',
+        'default'
     ]
 }
 
@@ -74,6 +81,12 @@ export const brigadeReducer = (state = initialState, action) => {
                 currentBrigade: getBrigadeByKey(action.payload)
             }
         }
+        case 'CHANGE_BUTTON_STATE': {
+            return {
+                ...state,
+                activeButtonStates: action.payload
+            }
+        }
         default:
             return state
     }
@@ -81,5 +94,6 @@ export const brigadeReducer = (state = initialState, action) => {
 
 export const actions = {
     setTimeFilterBrigadesAC: (filter) => ({type: 'SET_TIME_FILTER_BRIGADES', payload: filter}),
-    setActiveBrigadeAC: (key) => ({type: 'SET_ACTIVE_BRIGADE', payload: key})
+    setActiveBrigadeAC: (key) => ({type: 'SET_ACTIVE_BRIGADE', payload: key}),
+    changeButtonStateAC: (listButtonStates) => ({type: 'CHANGE_BUTTON_STATE', payload: listButtonStates})
 }
