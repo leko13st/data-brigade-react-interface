@@ -1,30 +1,62 @@
-import { Select } from 'antd'
+import { Button, Select } from 'antd'
 import React from 'react'
+import { useState } from 'react'
 import styles from './Date.module.css'
 
 const {Option} = Select
+const commonStyle = { width: "100%", textAlign: "center" }
 
-const Date = () => {
+const Date = (props) => {
+
+    const [filter, setFilter] = useState({start: null, duration: null})
+    const [typeButton, setTypeButton] = useState('default')
+
+    const startTimeList = props.startTime.map(startTime => {
+        return (<Option key={startTime} value={startTime}>{startTime}</Option>)
+    })
+
+    const durationTimeList = props.durationTime.map(durationTime => {
+        return (<Option key={durationTime} value={durationTime}>{durationTime} часа(ов)</Option>)
+    })
+
+    const setStartTimeShift = (value) => {
+        setFilter({...filter, start: value})
+        setTypeButton('primary')
+    }
+
+    const setDurationTimeShift = (value) => {
+        setFilter({...filter, duration: value})
+        setTypeButton('primary')
+    }
+
+    const applyFilterTime = () => {
+        if (filter.start !== null && filter.duration !== null){
+            props.setTimeFilter(filter)
+            setTypeButton('default')
+        }
+        else
+            alert('Укажите корректно параметры')
+    }
+
     return (
         <div className={styles.date}>
-            <Select defaultValue="Сегодня" style={{ width: "100%", textAlign: "center"}}>
+            <p className={styles.title}>Рабочая смена</p>
+            {/* <Select value="Сегодня" style={commonStyle}>
                 <Option value="today">Сегодня</Option>
                 <Option value="yesterday">Вчера</Option>
                 <Option value="week">Неделя</Option>
+            </Select> */}
+            <Select key='startTime' defaultValue={'init'} style={commonStyle} onChange={setStartTimeShift}>
+                <Option disabled value='init'>...Укажите начало</Option>
+                {startTimeList}
             </Select>
-            <Select defaultValue="Начало 00:00" style={{ width: "100%", textAlign: "center"}}>
-                <Option value="starttime0">00:00</Option>
-                <Option value="starttime6">06:00</Option>
-                <Option value="starttime12">12:00</Option>
-                <Option value="starttime18">18:00</Option>
+            <Select key='durationTime' defaultValue={'init'} style={commonStyle} onChange={setDurationTimeShift}>
+                <Option disabled value="init">...Укажите длительность</Option>
+                {durationTimeList}
             </Select>
-            <Select defaultValue="24 часа" style={{ width: "100%", textAlign: "center"}}>
-                <Option value="duration0">0 часов</Option>
-                <Option value="duration6">6 часов</Option>
-                <Option value="duration12">12 часов</Option>
-                <Option value="duration18">18 часов</Option>
-                <Option value="duration24">24 часа</Option>
-            </Select>
+            <p className={styles.button}>
+                <Button type={typeButton} style={commonStyle} onClick={applyFilterTime}>Принять</Button>
+            </p>
         </div>
     )
 }

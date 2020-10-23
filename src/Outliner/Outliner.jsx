@@ -2,38 +2,49 @@ import { Tree } from 'antd';
 import React from 'react'
 import styles from './Outliner.module.css'
 
-const Outliner = () => {
-    function dig(path = '0', level = 1) {
-        const list = [];
-        for (let i = 0; i < 3; i += 1) {
+const Outliner = (props) => {
 
-            let name = (level === 1 ? "Подразделение " : "Бригада ")
+    let data = [...props.brigades]
 
-            const key = `${path}-${i}`;
-            name += i
-            const treeNode = {
-                title: name,
-                key,
-            };
-        
-            if (level > 0) {
-                treeNode.children = dig(key, level - 1);
+    const generateOrder = () => {
+        const list = []
+
+        const createTreeNode = (name = 'Подразделение', num = '1', key = '1') => {
+            return {
+                title: name + ' ' + num,
+                key: key,
+                children: []
             }
-        
-            list.push(treeNode);
         }
-        return list;
-    }
-      
-    const treeData = dig();
 
-    const chooseBrigade = (event) => {
-        debugger
+        let treeNode = createTreeNode()
+        for (let i = 0; i < data.length; i++){
+            if (i !== 0)
+                if (data[i].division !== data[i - 1].division){
+                    list.push(treeNode)
+                    treeNode = createTreeNode('Подразделение', data[i].division, (data[i].division).toString())
+                }
+
+            treeNode.children.push(createTreeNode('Бригада', data[i].id, (data[i].division).toString() + '-' + data[i].id))
+        }
+
+        if (data.length > 0)
+            list.push(treeNode)
+        return list
+    }
+
+    const treeData = generateOrder();
+
+    const chooseBrigade = (data1, data2) => {
+        if (data2.key.length > 2){
+            let key = data2.key.slice(2)
+            props.setActiveBrigade(+key)
+        }        
     }
 
     return (
         <div className={styles.outliner}>
-            <Tree treeData={treeData} defaultExpandAll onClick={(e) => chooseBrigade(e)} />
+            <Tree treeData={treeData} defaultExpandAll onClick={chooseBrigade} />
         </div>
     )
 }
