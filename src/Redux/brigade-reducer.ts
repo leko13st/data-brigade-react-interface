@@ -1,11 +1,14 @@
-import img1 from './../images/1.png'
-import img2 from './../images/2.png'
-import img3 from './../images/3.png'
-import img4 from './../images/4.jpg'
-import img5 from './../images/5.png'
-import img6 from './../images/6.png'
-import img7 from './../images/7.jpg'
-import img8 from './../images/8.jpg'
+import { BrigadeType, ActionTypes } from './types-reducers';
+const img1  = require('./../images/1.png')
+const img2  = require('./../images/2.png')
+const img3  = require('./../images/3.png')
+const img4  = require('./../images/4.jpg')
+const img5  = require('./../images/5.png')
+const img6  = require('./../images/6.png')
+const img7  = require('./../images/7.jpg')
+const img8  = require('./../images/8.jpg')
+
+export type InitialState = typeof initialState
 
 let initialState = {
     brigades: [
@@ -24,9 +27,9 @@ let initialState = {
         {id: 13, division: 3, field: 'Месторождение №9', cluster: 'Куст №2', well: 'Скважина №4', startShift: '06:00', durationShift: 24, chart: img7},
         {id: 14, division: 3, field: 'Месторождение №8', cluster: 'Куст №1', well: 'Скважина №9', startShift: '18:00', durationShift: 18, chart: img3}
         //Пример заполнения стейта.
-    ],
-    currentListBrigades: [],
-    currentBrigade: null,
+    ] as Array<BrigadeType>,
+    currentListBrigades: [] as Array<BrigadeType>,
+    currentBrigade: undefined as undefined | BrigadeType,
     startShiftTimes: [
         '00:00',
         '06:00',
@@ -55,14 +58,13 @@ let initialState = {
     ]
 }
 
-export const brigadeReducer = (state = initialState, action) => {
+export const brigadeReducer = (state: InitialState = initialState, action: ActionTypes): InitialState => {
 
-    const getBrigadeByKey = (key) => {
+    const getBrigadeByKey = (key: number) => {
         for (let i = 0; i < state.brigades.length; i++){
             if ((i + 1) === +key){
                 return state.brigades[i]        
             }
-
         }
     }
 
@@ -78,13 +80,13 @@ export const brigadeReducer = (state = initialState, action) => {
         case 'SET_ACTIVE_BRIGADE': {
             return {
                 ...state,
-                currentBrigade: getBrigadeByKey(action.payload)
+                currentBrigade: getBrigadeByKey(action.payload.key)
             }
         }
         case 'CHANGE_BUTTON_STATE': {
             return {
                 ...state,
-                activeButtonStates: action.payload
+                activeButtonStates: action.payload.listButtonStates
             }
         }
         default:
@@ -93,7 +95,7 @@ export const brigadeReducer = (state = initialState, action) => {
 }
 
 export const actions = {
-    setTimeFilterBrigadesAC: (filter) => ({type: 'SET_TIME_FILTER_BRIGADES', payload: filter}),
-    setActiveBrigadeAC: (key) => ({type: 'SET_ACTIVE_BRIGADE', payload: key}),
-    changeButtonStateAC: (listButtonStates) => ({type: 'CHANGE_BUTTON_STATE', payload: listButtonStates})
+    setTimeFilterBrigadesAC: (filter: {start: string, duration: number}) => ({type: 'SET_TIME_FILTER_BRIGADES', payload: filter}),
+    setActiveBrigadeAC: (key: number) => ({type: 'SET_ACTIVE_BRIGADE', payload: { key }}),
+    changeButtonStateAC: (listButtonStates: string[]) => ({type: 'CHANGE_BUTTON_STATE', payload: listButtonStates})
 }

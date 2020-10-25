@@ -6,7 +6,7 @@ import Chart from './Chart/Chart';
 import OutlinerContainer from './Outliner/OutlinerContainer';
 import DateContainer from './Date/DateContainer';
 
-const App = () => {
+const App: React.FC = () => {
   return(
     <div className="app-wrapper">
       <Instruments />

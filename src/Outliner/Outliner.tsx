@@ -1,19 +1,25 @@
 import { Tree } from 'antd';
 import React from 'react'
+import { BrigadeType } from '../Redux/types-reducers';
 import styles from './Outliner.module.css'
 
-const Outliner = (props) => {
+type PropsType = {
+    brigades: BrigadeType[]
+    setActiveBrigade: (key: number) => void
+}
+
+const Outliner: React.FC<PropsType> = (props) => {
 
     let data = [...props.brigades]
 
     const generateOrder = () => {
         const list = []
 
-        const createTreeNode = (name = 'Подразделение', num = '1', key = '1') => {
+        const createTreeNode = (name = 'Подразделение', num = 1, key = '1') => {
             return {
-                title: name + ' ' + num,
-                key: key,
-                children: []
+                title: name + ' ' + num as string,
+                key: key as string,
+                children: [] as any
             }
         }
 
@@ -35,9 +41,9 @@ const Outliner = (props) => {
 
     const treeData = generateOrder();
 
-    const chooseBrigade = (data1, data2) => {
+    const chooseBrigade = (data1: any, data2: any) => {
         if (data2.key.length > 2){
-            let key = data2.key.slice(2)
+            let key: number = data2.key.slice(2)
             props.setActiveBrigade(+key)
         }        
     }

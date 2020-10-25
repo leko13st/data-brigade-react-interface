@@ -1,15 +1,29 @@
 import { Button, Select } from 'antd'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { useState } from 'react'
 import styles from './Date.module.css'
 
+type PropsType = {
+    startTime: string[]
+    durationTime: number[]
+
+    setTimeFilter: (filter: FilterType) => void
+}
+
+type FilterType = {
+    start: string
+    duration: number
+}
+
+type ButtonStateType = 'default' | 'primary'
+
 const {Option} = Select
-const commonStyle = { width: "100%", textAlign: "center" }
+const commonStyle: CSSProperties = { width: "100%", textAlign: "center" }
 
-const Date = (props) => {
+const Date: React.FC<PropsType> = (props) => {
 
-    const [filter, setFilter] = useState({start: null, duration: null})
-    const [typeButton, setTypeButton] = useState('default')
+    const [filter, setFilter] = useState<FilterType>({start: '0', duration: 0})
+    const [typeButton, setTypeButton] = useState<ButtonStateType>('default')
 
     const startTimeList = props.startTime.map(startTime => {
         return (<Option key={startTime} value={startTime}>{startTime}</Option>)
@@ -19,13 +33,13 @@ const Date = (props) => {
         return (<Option key={durationTime} value={durationTime}>{durationTime} часа(ов)</Option>)
     })
 
-    const setStartTimeShift = (value) => {
+    const setStartTimeShift = (value: string) => {
         setFilter({...filter, start: value})
         setTypeButton('primary')
     }
 
-    const setDurationTimeShift = (value) => {
-        setFilter({...filter, duration: value})
+    const setDurationTimeShift = (value: string) => {
+        setFilter({...filter, duration: +value})
         setTypeButton('primary')
     }
 

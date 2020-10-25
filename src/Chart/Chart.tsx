@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { getCurrentBrigadeChart } from '../Redux/brigade-selector'
 import styles from './Chart.module.css'
 
-const Chart = () => {
+const Chart: React.FC = () => {
     const currentChart = useSelector(getCurrentBrigadeChart)  
 
     return (
